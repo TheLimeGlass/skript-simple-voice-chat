@@ -1,0 +1,6 @@
+name: skript-simple-voice-chat
+authors: [LimeGlass]
+version: @version@
+api-version: 1.13
+depend: [Skript, voicechat]
+main: me.limeglass.skriptsimplevoicechat.SkriptSimpleVoiceChat

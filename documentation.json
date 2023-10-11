@@ -1,0 +1,318 @@
+{
+  "events": [
+    {
+      "id": "disable_voice_chat",
+      "name": "On disable voice chat",
+      "description": [
+        "called when a player disables their voice chat"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[on] [on] (player disabl(ing|e) voice chat|voice chat disabl(ing|ed)) [with priority (lowest|low|normal|high|highest|monitor)]"
+      ],
+      "event values": [
+        "event-voicechatconnection",
+        "event-player"
+      ],
+      "cancellable": true
+    }
+  ],
+  "conditions": [
+    {
+      "id": "ConMicrophonePacketEventIsWhispering",
+      "name": "Microphone Use Is Whispering",
+      "description": [
+        "Returns true if the incoming microphone use event is whispering."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[the (microphone|event|player)] is whispering"
+      ]
+    },
+    {
+      "id": "ConPlayerStateChangeIsDisabled",
+      "name": "Player State Change Is Disabled",
+      "description": [
+        "Returns true if the player disabled their voice chat in an 'player change state event'"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[[the] player] disabled their voice chat"
+      ]
+    },
+    {
+      "id": "ConGroupIsPersistent",
+      "name": "Voice Connection Group Can Persist",
+      "description": [
+        "Returns true if a voice chat connection group will persist over server restart. Must create a new group to change value."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "%voicechatgroups% can (be persistent|persist)",
+        "%voicechatgroups% (can't|cannot|can not) (be persistent|persist)"
+      ]
+    },
+    {
+      "id": "ConGroupHasPassword",
+      "name": "Voice Connection Group Has A Password",
+      "description": [
+        "Returns true if a voice chat connection group has a password required. Must create a new group to change value."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "%voicechatgroups% (has|have) [a] [group] password",
+        "%voicechatgroups% (doesn't|does not|do not|don't) have [a] [group] password"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "id": "EffSendStaticPacket",
+      "name": "Send Static Sound Packet",
+      "description": [
+        "Send static sound packets to voice connections."
+      ],
+      "examples": [
+        "on microphone use:",
+        "\tsend event-static sound packet to all players where [player input is not player]"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "send [static sound packet] %staticsoundpacket% to %voicechatconnections%"
+      ]
+    }
+  ],
+  "expressions": [
+    {
+      "id": "ExprReceiverConnection",
+      "name": "Receiving Voice Chat Connection",
+      "description": [
+        "The receiving connection of any voice chat packet."
+      ],
+      "examples": [
+        "on microphone use:",
+        "\tname of the receiving voice connection is \"LimeGlass\"",
+        "\tcancel the event"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voicechat Connection",
+      "patterns": [
+        "[the] ([voice chat] connection receiver|receiving [voice chat] connection)"
+      ]
+    },
+    {
+      "id": "ExprBroadcastRadius",
+      "name": "Voice Chat Broadcast Radius",
+      "description": [
+        "Returns the radius the audio packets are broadcasted at."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "double",
+      "patterns": [
+        "[the] [voice] [chat] broadcast radius"
+      ]
+    },
+    {
+      "id": "ExprVoiceConnectionGroup",
+      "name": "Voice Chat Connection Group",
+      "description": [
+        "Returns the group that a voice chat connection is within."
+      ],
+      "examples": [
+        "on microphone packet:",
+        "\tname of group of event-voice chat connection is not \"global\"",
+        "\tcancel event"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voice Chat Connection Group",
+      "changers": [
+        "set",
+        "delete"
+      ],
+      "patterns": [
+        "[the] [the] [voice [chat]] group [of %voicechatconnections%]",
+        "%voicechatconnections%'[s] [the] [voice [chat]] group"
+      ]
+    },
+    {
+      "id": "ExprGroups",
+      "name": "Voice Chat Groups",
+      "description": [
+        "Returns the registered voice chat groups."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voice Chat Connection Group",
+      "changers": [
+        "remove",
+        "remove all"
+      ],
+      "patterns": [
+        "[(all|the|all [of] the)] [voice] [chat] groups"
+      ]
+    },
+    {
+      "id": "ExprVoiceHost",
+      "name": "Voice Chat Host",
+      "description": [
+        "Returns the voice host of the voice chat. Can also be set in a 'voice chat send host' event."
+      ],
+      "examples": [
+        "on voice chat send host:",
+        "\tvoice chat host is not \"localhost\"",
+        "\tset the voice chat host to \"127.0.0.1\""
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Text",
+      "changers": [
+        "set"
+      ],
+      "patterns": [
+        "[the] voice [chat] [server] host"
+      ]
+    },
+    {
+      "id": "ExprNewGroup",
+      "name": "Voice Chat New Group",
+      "description": [
+        "Creates a new group."
+      ],
+      "examples": [
+        "set {_group} to a new normal voice chat group named \"Example\" with password \"123\" and to persist"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voice Chat Connection Group",
+      "patterns": [
+        "[a] [new] [%voicechatgrouptype%] [voice chat] group named %string% [with password %string%] [and persists:(persists|to persist)]"
+      ]
+    },
+    {
+      "id": "ExprVoicechatServerPort",
+      "name": "Voice Chat Server Port",
+      "description": [
+        "Returns the voice chat server port of the voice chat."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "integer",
+      "patterns": [
+        "[the] voice [chat] server [local] port"
+      ]
+    },
+    {
+      "id": "ExprStaticSoundPacket",
+      "name": "Voice Chat Static Sound Packet",
+      "description": [
+        "Returns the static sound packet involved in a microphone use event."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voice Chat Static Sound Packets",
+      "patterns": [
+        "[the] [voice] [chat] static sound packet"
+      ]
+    },
+    {
+      "id": "ExprVolumeCategories",
+      "name": "Voice Chat Volume Categories",
+      "description": [
+        "Returns the voice chat volume categories."
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Voice Chat Volume Category",
+      "changers": [
+        "remove",
+        "remove all"
+      ],
+      "patterns": [
+        "[(all|the|all [of] the)] [voice] [chat] volume categories"
+      ]
+    },
+    {
+      "id": "ExprGroupNameOrID",
+      "name": "Voice Connection Group Name/ID",
+      "description": [
+        "The name or UUID of a voice chat connection group from voice chat connections. Must create a new group to change value."
+      ],
+      "examples": [
+        "on microphone use:",
+        "\tname of the group of the event-voice chat connection is not \"global\"",
+        "\tcancel the event"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "return type": "Text",
+      "patterns": [
+        "[the] [the] [group] (:name|[uu]id) [of %voicechatgroups%]",
+        "%voicechatgroups%'[s] [the] [group] (:name|[uu]id)"
+      ]
+    }
+  ],
+  "types": [
+    {
+      "id": "Group",
+      "name": "Voice Chat Connection Group",
+      "description": [
+        "Voice chat connections can be involved in a group. This type collects the name, id, password and if it persists. The parse must be the UUID of the group."
+      ],
+      "patterns": [
+        "[voice[ ]chat[ ]connection[ ]]group[s]"
+      ]
+    },
+    {
+      "id": "StaticSoundPacket",
+      "name": "Voice Chat Static Sound Packets",
+      "description": [
+        "A static sound packet from the microphone use event."
+      ],
+      "patterns": [
+        "[voice[ ]chat[ ]]static sound packet[s]"
+      ]
+    },
+    {
+      "id": "VolumeCategory",
+      "name": "Voice Chat Volume Category",
+      "description": [
+        "Voice chat volume category."
+      ],
+      "patterns": [
+        "[voice[ ]chat[ ]]volume categor(ies|y)"
+      ]
+    },
+    {
+      "id": "VoicechatConnection",
+      "name": "Voicechat Connection",
+      "patterns": [
+        "voice[ ][chat[ ]]connection[s]"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+version: @version@
+
+#@an makes the pattern allow for `an`.
+
+types:
+	voicechatconnection: voice chat connection¦s @a
+	voicechatgroup: voice chat group¦s @a
+	voicechatgrouptype: voice chat group type¦s @a
+	voicechatvolumecategory: voice chat volume category, voice chat volume categor¦ies @a
+	staticsoundpacket: static sound packet¦s @a
+
+voicechatgrouptype:
+	isolated: isolated
+	normal: normal
+	open: open

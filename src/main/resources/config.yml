@@ -1,0 +1,8 @@
+# Async event cancel
+# When this is false, skript-simple-voice-chat will sync every event to determine cancellation.
+# When this is true, no guarentee will be made that the event gets cancelled on Voice Chat.
+# YOU MUST KNOW WHAT YOU'RE DOING. This makes all skript-simple-voice-chat events async!
+async-event-cancel: true
+
+# Configuration version, don't modify.
+version: 1
