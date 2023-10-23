@@ -16,10 +16,10 @@ import me.limeglass.skriptsimplevoicechat.events.SkriptMicrophonePacketEvent;
 @Name("Microphone Use Is Whispering")
 @Description("Returns true if the incoming microphone use event is whispering.")
 @Since("1.0.0")
-public class ConMicrophonePacketEventIsWhispering extends Condition {
+public class CondMicrophonePacketEventIsWhispering extends Condition {
 
 	static {
-		Skript.registerCondition(ConMicrophonePacketEventIsWhispering.class, "[the (microphone|event|player)] is whispering");
+		Skript.registerCondition(CondMicrophonePacketEventIsWhispering.class, "[the (microphone|event|player)] is whispering");
 	}
 
 	@Override
