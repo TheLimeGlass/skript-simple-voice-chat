@@ -34,14 +34,14 @@ public class ConPlayerStateChangeIsDisabled extends Condition {
 
 	@Override
 	public boolean check(Event event) {
-		if (!(event instanceof SkriptMicrophonePacketEvent))
+		if (!(event instanceof SkriptPlayerStateChangedEvent))
 			return false;
-		return ((SkriptMicrophonePacketEvent) event).getEvent().getPacket().isWhispering();
+		return ((SkriptPlayerStateChangedEvent) event).getEvent().getPacket().isDisabled();
 	}
 
 	@Override
 	public String toString(@Nullable Event event, boolean debug) {
-		return "microphone is whispering";
+		return "disabled their voice chat";
 	}
 
 }
