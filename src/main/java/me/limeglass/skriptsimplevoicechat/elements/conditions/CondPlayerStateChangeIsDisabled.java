@@ -16,10 +16,10 @@ import me.limeglass.skriptsimplevoicechat.events.SkriptPlayerStateChangedEvent;
 @Name("Player State Change Is Disabled")
 @Description("Returns true if the player disabled their voice chat in an 'player change state event'")
 @Since("1.0.0")
-public class ConPlayerStateChangeIsDisabled extends Condition {
+public class CondPlayerStateChangeIsDisabled extends Condition {
 
 	static {
-		Skript.registerCondition(ConPlayerStateChangeIsDisabled.class, "[[the] player] disabled their voice chat");
+		Skript.registerCondition(CondPlayerStateChangeIsDisabled.class, "[[the] player] disabled their voice chat");
 	}
 
 	@Override
