@@ -11,7 +11,6 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import me.limeglass.skriptsimplevoicechat.events.SkriptMicrophonePacketEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptPlayerStateChangedEvent;
 
 @Name("Player State Change Is Disabled")
@@ -36,7 +35,7 @@ public class ConPlayerStateChangeIsDisabled extends Condition {
 	public boolean check(Event event) {
 		if (!(event instanceof SkriptPlayerStateChangedEvent))
 			return false;
-		return ((SkriptPlayerStateChangedEvent) event).getEvent().getPacket().isDisabled();
+		return ((SkriptPlayerStateChangedEvent) event).getEvent().isDisabled();
 	}
 
 	@Override
