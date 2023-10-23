@@ -37,7 +37,7 @@ public class EffSendStaticPacket extends Effect {
 	@SuppressWarnings("unchecked")
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
 		packet = (Expression<StaticSoundPacket>) exprs[0];
-		connections = (Expression<VoicechatConnection>) exprs[0];
+		connections = (Expression<VoicechatConnection>) exprs[1];
 		return true;
 	}
 
