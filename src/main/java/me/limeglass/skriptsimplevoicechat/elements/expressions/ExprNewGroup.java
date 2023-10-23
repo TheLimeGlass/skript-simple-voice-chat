@@ -25,7 +25,7 @@ import me.limeglass.skriptsimplevoicechat.elements.Types.GroupType;
 public class ExprNewGroup extends SimpleExpression<Group> {
 
 	static {
-		Skript.registerExpression(ExprNewGroup.class, Group.class, ExpressionType.COMBINED, "[a] [new] [%-voicechatgrouptype%] [voice chat] group named %string% [with password %-string%] [and persists:(persists|to persist)]");
+		Skript.registerExpression(ExprNewGroup.class, Group.class, ExpressionType.COMBINED, "[a] [new] [%-voicechatgrouptype%] [voice chat] group named %string% [with password %-string%] [persists:and persists(persists|to persist)]");
 	}
 
 	@Nullable
