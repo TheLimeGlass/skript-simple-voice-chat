@@ -53,13 +53,15 @@ public class Events {
 
 		// MicrophonePacketEvent
 		Skript.registerEvent("microphone packet", SimpleEvent.class, SkriptMicrophonePacketEvent.class, "microphone (use|talk|packet)")
-				.description("This event is emitted when a microphone packet arrives at the server.")
+				.description(
+					"This event is emitted when a microphone packet arrives at the server.",
+					"WARNING: This event only runs async, so don't place sync syntaxes inside this event!"
+				)
 				.examples(
 						"on microphone use:",
 							"\tevent-voice chat connection is set",
 							"\tplayer has permission \"voicechat_broadcast.broadcast\"",
-							"\tcancel the event",
-							"\t\\#TODO hopefully I finish before release"
+							"\tcancel the event"
 				)
 				.since("1.0.0");
 

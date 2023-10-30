@@ -17,7 +17,6 @@ import ch.njol.util.Kleenean;
 import de.maxhenkel.voicechat.api.Group;
 import de.maxhenkel.voicechat.api.VoicechatConnection;
 import de.maxhenkel.voicechat.api.VolumeCategory;
-import de.maxhenkel.voicechat.api.packets.StaticSoundPacket;
 import me.limeglass.skriptsimplevoicechat.SkriptSimpleVoiceChat;
 import me.limeglass.skriptsimplevoicechat.events.SkriptRemoveGroupEvent;
 
@@ -114,30 +113,6 @@ public class Types {
 					@Override
 					public String toVariableNameString(VolumeCategory category) {
 						return category.getId() + ":" + category.getName();
-					}
-
-				}));
-
-		Classes.registerClass(new ClassInfo<>(StaticSoundPacket.class, "staticsoundpacket")
-				.user("(voice ?chat ?)?static sound packets?")
-				.name("Voice Chat Static Sound Packets")
-				.description("A static sound packet from the microphone use event.")
-				.defaultExpression(new EventValueExpression<StaticSoundPacket>(StaticSoundPacket.class))
-				.parser(new Parser<StaticSoundPacket>() {
-
-					@Override
-					public boolean canParse(ParseContext context) {
-						return false;
-					}
-
-					@Override
-					public String toString(StaticSoundPacket packet, int flags) {
-						return "static sound packet in category " + packet.getCategory() + " to " + packet.getSender();
-					}
-
-					@Override
-					public String toVariableNameString(StaticSoundPacket packet) {
-						return packet.getCategory() + ":" + packet.getSender();
 					}
 
 				}));

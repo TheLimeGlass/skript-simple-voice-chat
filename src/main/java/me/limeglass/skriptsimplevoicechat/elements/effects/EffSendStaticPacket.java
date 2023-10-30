@@ -27,7 +27,7 @@ import me.limeglass.skriptsimplevoicechat.SkriptSimpleVoiceChat;
 public class EffSendStaticPacket extends Effect {
 
 	static {
-		Skript.registerEffect(EffSendStaticPacket.class, "send [static sound packet] %staticsoundpacket% to %voicechatconnections%");
+		Skript.registerEffect(EffSendStaticPacket.class, "send [static] sound packet[s] %staticsoundpacket% to [voice chat connections] %voicechatconnections%");
 	}
 
 	private Expression<VoicechatConnection> connections;

@@ -1,9 +1,6 @@
 package me.limeglass.skriptsimplevoicechat;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,8 +38,6 @@ import me.limeglass.skriptsimplevoicechat.events.VoiceChatEvent;
 
 public final class SkriptSimpleVoiceChat extends JavaPlugin implements VoicechatPlugin {
 
-	public static boolean ASYNC_EVENTS;
-
 	private static VoicechatServerApi VOICE_CHAT_API;
 	private static SkriptSimpleVoiceChat INSTANCE;
 	private SkriptAddon ADDON;
@@ -62,8 +57,6 @@ public final class SkriptSimpleVoiceChat extends JavaPlugin implements Voicechat
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveDefaultConfig();
-		ASYNC_EVENTS = getConfig().getBoolean("async-event-cancel", false);
 		BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
 		if (service != null) {
 			service.registerPlugin(this);
@@ -99,29 +92,16 @@ public final class SkriptSimpleVoiceChat extends JavaPlugin implements Voicechat
 	 * Method required to keep event loaded.
 	 */
 	private void callEvent(VoiceChatEvent<?> event) {
-		if (ASYNC_EVENTS) {
-			if (Bukkit.isPrimaryThread()) {
-				Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-					Bukkit.getPluginManager().callEvent(event);
-					if (event.isCancelled())
-						event.getEvent().cancel();
-				});
-				return;
-			}
+		Runnable runnable = () -> {
 			Bukkit.getPluginManager().callEvent(event);
 			if (event.isCancelled())
 				event.getEvent().cancel();
+		};
+		if (!Bukkit.isPrimaryThread()) {
+			runnable.run();
 			return;
 		}
-		boolean cancelled = false;
-		try {
-			cancelled = Bukkit.getScheduler().callSyncMethod(this, () -> {
-				Bukkit.getPluginManager().callEvent(event);
-				return event.isCancelled();
-			}).get(1, TimeUnit.MINUTES);
-			if (cancelled)
-				event.getEvent().cancel();
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {}
+		Bukkit.getScheduler().runTaskAsynchronously(this, runnable);
 	}
 
 	@Override
