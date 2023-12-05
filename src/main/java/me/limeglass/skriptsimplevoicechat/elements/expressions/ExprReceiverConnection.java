@@ -16,6 +16,7 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import de.maxhenkel.voicechat.api.VoicechatConnection;
 import de.maxhenkel.voicechat.api.events.PacketEvent;
+import me.limeglass.skriptsimplevoicechat.events.SkriptStaticSoundPacketEvent;
 import me.limeglass.skriptsimplevoicechat.events.VoiceChatConnectionEvent;
 
 @Name("Receiving Voice Chat Connection")
@@ -34,8 +35,8 @@ public class ExprReceiverConnection extends SimpleExpression<VoicechatConnection
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-		if (!getParser().isCurrentEvent(VoiceChatConnectionEvent.class)) {
-			Skript.error("You can only get a 'voice chat receiver' in a voice chat event.");
+		if (!getParser().isCurrentEvent(VoiceChatConnectionEvent.class, SkriptStaticSoundPacketEvent.class)) {
+			Skript.error("You can only get a 'voice chat receiver' or 'static sound event' in a voice chat event.");
 			return false;
 		}
 		return true;
@@ -45,9 +46,11 @@ public class ExprReceiverConnection extends SimpleExpression<VoicechatConnection
 	@Nullable
 	@SuppressWarnings("rawtypes")
 	protected VoicechatConnection[] get(Event event) {
-		if (!(event instanceof VoiceChatConnectionEvent))
-			return new VoicechatConnection[0];
-		return CollectionUtils.array(((PacketEvent) ((VoiceChatConnectionEvent) event).getEvent()).getReceiverConnection());
+		if (event instanceof VoiceChatConnectionEvent)
+			return CollectionUtils.array(((PacketEvent) ((VoiceChatConnectionEvent) event).getEvent()).getReceiverConnection());
+		if (event instanceof SkriptStaticSoundPacketEvent)
+			return CollectionUtils.array(((PacketEvent) ((SkriptStaticSoundPacketEvent) event).getEvent()).getReceiverConnection());
+		return new VoicechatConnection[0];
 	}
 
 	@Override

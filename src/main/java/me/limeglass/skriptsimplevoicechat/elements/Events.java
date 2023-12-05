@@ -20,6 +20,7 @@ import me.limeglass.skriptsimplevoicechat.events.SkriptPlayerDisconnectedEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptPlayerStateChangedEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptRegisterVolumeCategoryEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptRemoveGroupEvent;
+import me.limeglass.skriptsimplevoicechat.events.SkriptStaticSoundPacketEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptUnregisterVolumeCategoryEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptVoiceHostEvent;
 import me.limeglass.skriptsimplevoicechat.events.SkriptVoicechatServerStartedEvent;
@@ -152,6 +153,11 @@ public class Events {
 		Skript.registerEvent("voice chat server stopping", SimpleEvent.class, SkriptVoicechatServerStoppedEvent.class, "voice[ ]chat server stop[ping]")
 				.description("This event is called as the voice chat server stops.")
 				.since("1.0.0");
+
+		// SkriptStaticSoundPacketEvent
+		Skript.registerEvent("static packet event", SimpleEvent.class, SkriptStaticSoundPacketEvent.class, "static sound packet event")
+				.description("This event is emitted when a static sound packet is about to get sent to a client.")
+				.since("1.0.2");
 	}
 
 }

@@ -13,15 +13,15 @@
         "[on] [on] (player disabl(ing|e) voice chat|voice chat disabl(ing|ed)) [with priority (lowest|low|normal|high|highest|monitor)]"
       ],
       "event values": [
-        "event-voicechatconnection",
-        "event-player"
+        "event-player",
+        "event-voicechatconnection"
       ],
       "cancellable": true
     }
   ],
   "conditions": [
     {
-      "id": "ConMicrophonePacketEventIsWhispering",
+      "id": "CondMicrophonePacketEventIsWhispering",
       "name": "Microphone Use Is Whispering",
       "description": [
         "Returns true if the incoming microphone use event is whispering."
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "id": "ConPlayerStateChangeIsDisabled",
+      "id": "CondPlayerStateChangeIsDisabled",
       "name": "Player State Change Is Disabled",
       "description": [
         "Returns true if the player disabled their voice chat in an 'player change state event'"
@@ -72,25 +72,6 @@
       "patterns": [
         "%voicechatgroups% (has|have) [a] [group] password",
         "%voicechatgroups% (doesn't|does not|do not|don't) have [a] [group] password"
-      ]
-    }
-  ],
-  "effects": [
-    {
-      "id": "EffSendStaticPacket",
-      "name": "Send Static Sound Packet",
-      "description": [
-        "Send static sound packets to voice connections."
-      ],
-      "examples": [
-        "on microphone use:",
-        "\tsend event-static sound packet to all players where [player input is not player]"
-      ],
-      "since": [
-        "1.0.0"
-      ],
-      "patterns": [
-        "send [static sound packet] %staticsoundpacket% to %voicechatconnections%"
       ]
     }
   ],
@@ -206,7 +187,21 @@
       ],
       "return type": "Voice Chat Connection Group",
       "patterns": [
-        "[a] [new] [%voicechatgrouptype%] [voice chat] group named %string% [with password %string%] [and persists:(persists|to persist)]"
+        "[a] [new] [%voicechatgrouptype%] [voice chat] group named %string% [with password %string%] [persists:and persists (persists|to persist)]"
+      ]
+    },
+    {
+      "id": "ExprNewVolumeCategory",
+      "name": "Voice Chat New Volume Category",
+      "description": [
+        "Creates a new volume category. This allows players to turn the volume up or down in the adjust volumes menu."
+      ],
+      "since": [
+        "1.0.1"
+      ],
+      "return type": "Voice Chat Volume Category",
+      "patterns": [
+        "[a] [new] [voice chat] volume category with id %string% named %string% [with description %string%]"
       ]
     },
     {
@@ -221,20 +216,6 @@
       "return type": "integer",
       "patterns": [
         "[the] voice [chat] server [local] port"
-      ]
-    },
-    {
-      "id": "ExprStaticSoundPacket",
-      "name": "Voice Chat Static Sound Packet",
-      "description": [
-        "Returns the static sound packet involved in a microphone use event."
-      ],
-      "since": [
-        "1.0.0"
-      ],
-      "return type": "Voice Chat Static Sound Packets",
-      "patterns": [
-        "[the] [voice] [chat] static sound packet"
       ]
     },
     {
@@ -285,16 +266,6 @@
       ],
       "patterns": [
         "[voice[ ]chat[ ]connection[ ]]group[s]"
-      ]
-    },
-    {
-      "id": "StaticSoundPacket",
-      "name": "Voice Chat Static Sound Packets",
-      "description": [
-        "A static sound packet from the microphone use event."
-      ],
-      "patterns": [
-        "[voice[ ]chat[ ]]static sound packet[s]"
       ]
     },
     {
