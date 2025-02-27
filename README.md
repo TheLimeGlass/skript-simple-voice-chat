@@ -4,6 +4,8 @@ A Skript addon for interacting with the simple voice chat plugin on the Bukkit s
 
 Requires voicechat https://www.spigotmc.org/resources/simple-voice-chat.93738/
 
+Documentation http://skripthub.net/docs/?addon=skript-simple-voice-chat
+
 ```
 on microphone use:
     player is holding an end rod named "Microphone"

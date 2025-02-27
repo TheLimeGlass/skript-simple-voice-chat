@@ -2,7 +2,7 @@ package me.limeglass.skriptsimplevoicechat.elements;
 
 import java.util.UUID;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;

@@ -1,12 +1,10 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-	id 'com.github.johnrengelman.shadow' version '8.1.1'
-	id 'eclipse'
 	id 'java'
 }
 
-def latestJava = 17
+def latestJava = 21
 def oldestJava = 8
 
 java {
@@ -53,20 +51,21 @@ repositories {
 
 dependencies {
 
-	// Nullable annotation
-	implementation (group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version: '2.2.700')
-
 	// Spigot/Bukkit
-	implementation (group: 'org.spigotmc', name: 'spigot-api', version: '1.20.2-R0.1-SNAPSHOT')
+	implementation (group: 'org.spigotmc', name: 'spigot-api', version: '1.21.4-R0.1-SNAPSHOT')
 
 	// Simple Voice Chat
 	implementation (group: 'de.maxhenkel.voicechat', name: 'voicechat-api', version: '2.4.11')
 
 	// Skript
-	implementation (group: 'com.github.SkriptLang', name: 'Skript', version: '2.7.3') {
+	implementation (group: 'com.github.SkriptLang', name: 'Skript', version: '2.10.1') {
 		transitive = false
 	}
 
+}
+
+jar {
+	archiveVersion = project.property("version")
 }
 
 processResources {
@@ -75,10 +74,4 @@ processResources {
 		include '*.lang'
 		into 'lang/'
 	}
-}
-
-shadowJar {
-	configurations = [project.configurations.shadow]
-	archiveVersion = project.property("version")
-	minimize()
 }

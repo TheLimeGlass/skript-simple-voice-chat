@@ -1,12 +1,9 @@
 package me.limeglass.skriptsimplevoicechat.elements;
 
 import org.bukkit.entity.Player;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
-import ch.njol.skript.util.Getter;
 import de.maxhenkel.voicechat.api.Group;
 import de.maxhenkel.voicechat.api.VoicechatConnection;
 import de.maxhenkel.voicechat.api.VolumeCategory;
@@ -29,28 +26,14 @@ import me.limeglass.skriptsimplevoicechat.events.SkriptVoicechatServerStoppedEve
 import me.limeglass.skriptsimplevoicechat.events.SkriptVolumeCategoryEvent;
 import me.limeglass.skriptsimplevoicechat.events.VoiceChatConnectionEvent;
 
-@SuppressWarnings("rawtypes")
 public class Events {
 
 	static {
-		EventValues.registerEventValue(VoiceChatConnectionEvent.class, VoicechatConnection.class, new Getter<VoicechatConnection, VoiceChatConnectionEvent>() {
-			@Nullable
-			public VoicechatConnection get(VoiceChatConnectionEvent event) {
-				return event.getConnection();
-			}
+		EventValues.registerEventValue(VoiceChatConnectionEvent.class, VoicechatConnection.class, VoiceChatConnectionEvent::getConnection, EventValues.TIME_NOW);
+		EventValues.registerEventValue(VoiceChatConnectionEvent.class, Player.class, event -> {
+			return (Player) event.getConnection().getPlayer().getPlayer();
 		}, EventValues.TIME_NOW);
-		EventValues.registerEventValue(VoiceChatConnectionEvent.class, Player.class, new Getter<Player, VoiceChatConnectionEvent>() {
-			@Nullable
-			public Player get(VoiceChatConnectionEvent event) {
-				return (Player) event.getConnection().getPlayer().getPlayer();
-			}
-		}, EventValues.TIME_NOW);
-		EventValues.registerEventValue(SkriptGroupEvent.class, Group.class, new Getter<Group, SkriptGroupEvent>() {
-			@Nullable
-			public Group get(SkriptGroupEvent event) {
-				return event.getGroup();
-			}
-		}, EventValues.TIME_NOW);
+		EventValues.registerEventValue(SkriptGroupEvent.class, Group.class, SkriptGroupEvent::getGroup, EventValues.TIME_NOW);
 
 		// MicrophonePacketEvent
 		Skript.registerEvent("microphone packet", SimpleEvent.class, SkriptMicrophonePacketEvent.class, "microphone (use|talk|packet)")
@@ -95,17 +78,11 @@ public class Events {
 		Skript.registerEvent("voice chat player disconnect", SimpleEvent.class, SkriptPlayerDisconnectedEvent.class, "[simple] voice[ ]chat [player] disconnect[ed]")
 				.description("This event is called when a player disconnects from the voice chat. You can only use 'event-string' to get the UUID of the player for this event.")
 				.since("1.0.0");
-		EventValues.registerEventValue(SkriptPlayerDisconnectedEvent.class, String.class, new Getter<String, SkriptPlayerDisconnectedEvent>() {
-			@Nullable
-			public String get(SkriptPlayerDisconnectedEvent event) {
-				return event.getPlayerUUID() + "";
-			}
+		EventValues.registerEventValue(SkriptPlayerDisconnectedEvent.class, String.class, event -> {
+			return event.getPlayerUUID() + "";
 		}, EventValues.TIME_NOW);
-		EventValues.registerEventValue(SkriptPlayerDisconnectedEvent.class, String.class, new Getter<String, SkriptPlayerDisconnectedEvent>() {
-			@Nullable
-			public String get(SkriptPlayerDisconnectedEvent event) {
-				return event.getPlayerUUID() + "";
-			}
+		EventValues.registerEventValue(SkriptPlayerDisconnectedEvent.class, String.class, event -> {
+			return event.getPlayerUUID() + "";
 		}, EventValues.TIME_PAST);
 
 		// PlayerConnectedEvent
@@ -127,12 +104,7 @@ public class Events {
 		Skript.registerEvent("voice chat unregister volume category", SimpleEvent.class, SkriptUnregisterVolumeCategoryEvent.class, "voice[ ]chat unregister[ing [a]] volume category")
 				.description("This event is called when the server unregisters a volume category.")
 				.since("1.0.0");
-		EventValues.registerEventValue(SkriptVolumeCategoryEvent.class, VolumeCategory.class, new Getter<VolumeCategory, SkriptVolumeCategoryEvent>() {
-			@Nullable
-			public VolumeCategory get(SkriptVolumeCategoryEvent event) {
-				return event.getVolumeCategory();
-			}
-		}, EventValues.TIME_NOW);
+		EventValues.registerEventValue(SkriptVolumeCategoryEvent.class, VolumeCategory.class, SkriptVolumeCategoryEvent::getVolumeCategory, EventValues.TIME_NOW);
 
 		// VoiceHostEvent
 		Skript.registerEvent("voice chat send host", SimpleEvent.class, SkriptVoiceHostEvent.class, "voice[ ]chat send host")
