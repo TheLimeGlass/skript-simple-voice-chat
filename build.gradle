@@ -58,7 +58,7 @@ dependencies {
 	implementation (group: 'de.maxhenkel.voicechat', name: 'voicechat-api', version: '2.5.27')
 
 	// Skript
-	implementation (group: 'com.github.SkriptLang', name: 'Skript', version: '2.10.1') {
+	implementation (group: 'com.github.SkriptLang', name: 'Skript', version: '2.11.0') {
 		transitive = false
 	}
 
