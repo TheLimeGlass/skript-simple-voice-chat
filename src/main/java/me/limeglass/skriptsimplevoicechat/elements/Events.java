@@ -1,5 +1,6 @@
 package me.limeglass.skriptsimplevoicechat.elements;
 
+import me.limeglass.skriptsimplevoicechat.events.SkriptVoicechatVoiceDistanceEvent;
 import org.bukkit.entity.Player;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.util.SimpleEvent;
@@ -29,10 +30,8 @@ import me.limeglass.skriptsimplevoicechat.events.VoiceChatConnectionEvent;
 public class Events {
 
 	static {
+		EventValues.registerEventValue(VoiceChatConnectionEvent.class, Player.class, event -> (Player) event.getConnection().getPlayer().getPlayer(), EventValues.TIME_NOW);
 		EventValues.registerEventValue(VoiceChatConnectionEvent.class, VoicechatConnection.class, VoiceChatConnectionEvent::getConnection, EventValues.TIME_NOW);
-		EventValues.registerEventValue(VoiceChatConnectionEvent.class, Player.class, event -> {
-			return (Player) event.getConnection().getPlayer().getPlayer();
-		}, EventValues.TIME_NOW);
 		EventValues.registerEventValue(SkriptGroupEvent.class, Group.class, SkriptGroupEvent::getGroup, EventValues.TIME_NOW);
 
 		// MicrophonePacketEvent
@@ -45,9 +44,26 @@ public class Events {
 						"on microphone use:",
 							"\tevent-voice chat connection is set",
 							"\tplayer has permission \"voicechat_broadcast.broadcast\"",
+							"\tcancel the event",
+						"on microphone use:",
+							"\tplayer cannot see connection receiver",
 							"\tcancel the event"
 				)
-				.since("1.0.0");
+				.since("1.0.5");
+
+		// VoiceDistanceEvent
+		Skript.registerEvent("voice distance", SimpleEvent.class, SkriptVoicechatVoiceDistanceEvent.class, "voice distance")
+				.description(
+						"This event is emitted after a microphone packet arrives at the server and the distance is processed.",
+						"This can be used to modify the distance at which other players can hear this packet."
+				)
+				.examples(
+						"on voice distance:",
+							"\tevent-voice chat connection is set",
+							"\tplayer has permission \"voicechat_broadcast.broadcast\"",
+							"\tcancel the event"
+				)
+				.since("1.0.5");
 
 		// CreateGroupEvent
 		Skript.registerEvent("create group", SimpleEvent.class, SkriptCreateGroupEvent.class, "[[simple] voice[ ]chat] (group create|create group)")

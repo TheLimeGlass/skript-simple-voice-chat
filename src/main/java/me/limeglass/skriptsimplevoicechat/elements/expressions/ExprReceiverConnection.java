@@ -20,7 +20,7 @@ import me.limeglass.skriptsimplevoicechat.events.SkriptStaticSoundPacketEvent;
 import me.limeglass.skriptsimplevoicechat.events.VoiceChatConnectionEvent;
 
 @Name("Receiving Voice Chat Connection")
-@Description("The receiving connection of any voice chat packet.")
+@Description("The receiving connection of any voice chat packet. AKA who it's being sent to")
 @Examples({
 	"on microphone use:",
 		"\tname of the receiving voice connection is \"LimeGlass\"",
@@ -46,10 +46,10 @@ public class ExprReceiverConnection extends SimpleExpression<VoicechatConnection
 	@Nullable
 	@SuppressWarnings("rawtypes")
 	protected VoicechatConnection[] get(Event event) {
-		if (event instanceof VoiceChatConnectionEvent)
-			return CollectionUtils.array(((PacketEvent) ((VoiceChatConnectionEvent) event).getEvent()).getReceiverConnection());
-		if (event instanceof SkriptStaticSoundPacketEvent)
-			return CollectionUtils.array(((PacketEvent) ((SkriptStaticSoundPacketEvent) event).getEvent()).getReceiverConnection());
+		if (event instanceof SkriptStaticSoundPacketEvent skriptStaticSoundPacketEvent)
+			return CollectionUtils.array(skriptStaticSoundPacketEvent.getEvent().getReceiverConnection());
+		if (event instanceof VoiceChatConnectionEvent voiceChatConnectionEvent)
+			return CollectionUtils.array(((PacketEvent) voiceChatConnectionEvent.getEvent()).getReceiverConnection());
 		return new VoicechatConnection[0];
 	}
 
