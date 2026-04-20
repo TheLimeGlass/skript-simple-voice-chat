@@ -16,14 +16,14 @@ import de.maxhenkel.voicechat.api.Group;
 @Description("The name or UUID of a <a href='./classes.html#voicechatconnectiongroup'>voice chat connection group</a> from <a href='./classes.html#voicechatconnection'>voice chat connections</a>. Must create a new group to change value.")
 @Examples({
 	"on microphone use:",
-		"\tname of the group of the event-voice chat connection is not \"global\"",
+		"\tgroup name of the group of the event-voice chat connection is not \"global\"",
 		"\tcancel the event"
 })
 @Since("1.0.0")
 public class ExprGroupNameOrID extends SimplePropertyExpression<Group, String> {
 
 	static {
-		registerDefault(ExprGroupNameOrID.class, String.class, "[the] [group] (:name|[uu]id)", "voicechatgroups");
+		registerDefault(ExprGroupNameOrID.class, String.class, "group (:name|[uu]id)", "voicechatgroups");
 	}
 
 	private boolean name;
